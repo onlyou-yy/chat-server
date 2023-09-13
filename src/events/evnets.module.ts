@@ -4,4 +4,4 @@ import { EventsGateway } from './events.gateway';
 @Module({
   providers: [EventsGateway],
 })
-export class WebsocketModule {}
+export class EventsModule {}

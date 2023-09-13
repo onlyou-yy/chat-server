@@ -1,13 +1,15 @@
 import {
+  ConnectedSocket,
   MessageBody,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
-import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
+import { ConnectManagerService } from './manager/connect-manager.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { TSocketGetEventData, TSocketPostEventData } from './messageData.type';
+import { EServerOnEventType } from 'src/utils/event.enum';
 
 @WebSocketGateway({
   namespace: 'chat-websocket',
@@ -19,30 +21,31 @@ export class EventsGateway {
   @WebSocketServer()
   server: Server;
 
-  @SubscribeMessage('events')
-  findAll(@MessageBody() data: any): Observable<WsResponse<number>> {
-    console.log('events', data);
-    return from([1, 2, 3]).pipe(
-      map((item) => ({ event: 'events', data: item })),
-    );
+  constructor(
+    private eventEmitter: EventEmitter2,
+    private connectManager: ConnectManagerService,
+  ) {}
+
+  handleConnection(client: Socket) {
+    console.log('client connect', client.id);
+    this.connectManager.saveSocekt(client);
   }
 
-  @SubscribeMessage('identity')
-  async identity(@MessageBody() data: number): Promise<number> {
-    console.log('identity', data);
-    return data;
+  handleDisconnect(client: Socket) {
+    console.log('client disconnect', client.id);
+    this.connectManager.removeSocekt(client.id);
   }
 
-  @SubscribeMessage('msgtest')
-  msgTest(@MessageBody() data: any): WsResponse<number> {
-    console.log('msgtest', data);
-    return { event: 'msgtest', data: 2 };
-  }
-
-  @SubscribeMessage('hello')
-  hello(@MessageBody() reqData: { name: string }): string {
-    console.log('MyWebSocketGateway', reqData);
-    console.log(JSON.stringify(reqData));
-    return 'received reqData';
+  @SubscribeMessage(EServerOnEventType.EVENT_MESSAGE)
+  handleClientMessage(
+    @MessageBody()
+    eventData: TSocketGetEventData<any>,
+    @ConnectedSocket() client: Socket,
+  ) {
+    const data: TSocketPostEventData<any> = {
+      eventData,
+      client,
+    };
+    this.eventEmitter.emit(eventData.type, data);
   }
 }

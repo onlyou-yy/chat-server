@@ -1,12 +1,22 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { WebsocketModule } from './events/evnets.module';
+import { EventsModule } from './events/evnets.module';
+import { MysqlModule } from './utils/typeorm/mysql.module';
 import { UserModule } from './user/user.module';
-import { MysqlModule } from './typeorm/mysql.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ConnectManagerModule } from './events/manager/connect-manager.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [WebsocketModule, UserModule, MysqlModule],
+  imports: [
+    EventsModule,
+    ConnectManagerModule,
+    UserModule,
+    MysqlModule,
+    EventEmitterModule.forRoot(),
+    ChatModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
