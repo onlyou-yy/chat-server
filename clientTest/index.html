@@ -22,22 +22,50 @@
         <td><textarea type="text" id="content"></textarea></td>
       </tr>
     </table>
+    <button onclick="connect()">connect</button>
     <button onclick="sendHello()">sendMsg hello</button>
+    <button onclick="disconnect()">disconnect</button>
+    <hr />
+    <table border="1">
+      <tr>
+        <td><label for="username">username:</label></td>
+        <td><input type="text" id="username" /></td>
+      </tr>
+      <tr>
+        <td><label for="password">password:</label></td>
+        <td><input type="password" id="password"></input></td>
+      </tr>
+    </table>
+    <button onclick="login()">login</button>
+    <button onclick="loginXhr()">loginXhr</button>
+    <button onclick="logout()">logout</button>
     <script>
       const curIdEl = (q = document.querySelector('#curId'));
       const idEl = document.querySelector('#client-id');
       const contentEl = document.querySelector('#content');
+      const usernameEl = document.querySelector('#username');
+      const passwordEl = document.querySelector('#password');
 
-      const socket = io('http://localhost:3000/chat-websocket', {
-        transports: ['websocket'],
-      });
-      socket.on('connect', function () {
-        console.log('Connected');
-        curIdEl.innerText = socket.id;
-      });
-      socket.on('CLIENT_GET_CHAT_DATA', function (data) {
-        console.log('event', data);
-      });
+      let socket;
+      function connect(){
+        if(socket && socket.connected) return socket;
+        socket = io('http://localhost:3000/chat-websocket', {
+          transports: ['websocket'],
+          withCredentials: true,
+        });
+        socket.on('connect', function () {
+          console.log('Connected');
+          curIdEl.innerText = socket.id;
+        });
+        socket.on('CLIENT_GET_CHAT_DATA', function (data) {
+          console.log('event', data);
+        });
+        return socket;
+      }
+
+      function disconnect(){
+        socket.disconnect();
+      }
 
       function sendHello() {
         const id = idEl.value;
@@ -46,6 +74,45 @@
           data: { toId: id, data: msg },
           type: 'CHAT_WITH_SOMEONE',
         });
+      }
+
+      function login(){
+        const username = usernameEl.value || "jack";
+        const password = passwordEl.value || "654321"; 
+        fetch("http://localhost:3000/auth/login",{
+          mode:"cors",
+          method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          credentials:"include",
+          body:JSON.stringify({
+            name:username,
+            password,
+          })
+        }).then(res=>res.json()).then(console.log)
+      }
+
+      function loginXhr(){
+        const username = usernameEl.value || "jack";
+        const password = passwordEl.value || "654321"; 
+        const xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.open("POST","http://localhost:3000/auth/login");
+        xhr.setRequestHeader("Content-Type","application/json")
+        xhr.onreadystatechange = function(){
+          if(xhr.readyState === 4){
+            console.log(xhr.response);
+          }
+        }
+        xhr.send(JSON.stringify({
+          name:username,
+          password,
+        }))
+      }
+
+      function logout(){
+        fetch("http://localhost:3000/auth/logout").then(res=>res.json()).then(console.log)
       }
     </script>
   </body>

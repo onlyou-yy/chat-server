@@ -4,6 +4,7 @@ import { Socket } from 'socket.io';
 @Injectable()
 export class ConnectManagerService {
   connectUsers: Map<string, Socket> = new Map();
+  // constructor(private)
 
   saveSocekt(client: Socket) {
     this.connectUsers.set(client.id, client);

@@ -1,3 +1,4 @@
+import { hashPassword } from 'src/utils/helpers';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -11,23 +12,41 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return this.userRepository.save(createUserDto);
+  async create(createUserDto: CreateUserDto) {
+    const user = Object.assign(createUserDto) as CreateUserDto;
+    const hashPassw = await this.formatPassword(user.password);
+    user.password = hashPassw;
+    return this.userRepository.save(user);
   }
 
   findAll() {
     return this.userRepository.find();
   }
 
-  findOne(id: number) {
+  findOneById(id: string) {
     return this.userRepository.findOneBy({ id });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  findOneByName(name: string) {
+    return this.userRepository.findOneBy({ name });
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const user = Object.assign(updateUserDto) as CreateUserDto;
+    if (user.password) {
+      const hashPassw = await this.formatPassword(user.password);
+      user.password = hashPassw;
+    }
     return this.userRepository.update(id, updateUserDto);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.userRepository.delete(id);
+  }
+
+  async formatPassword(password: string) {
+    const passw = password;
+    const hashPasssw = await hashPassword(passw);
+    return hashPasssw;
   }
 }

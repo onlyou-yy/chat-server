@@ -14,8 +14,11 @@ import { EServerOnEventType } from 'src/utils/event.enum';
 @WebSocketGateway({
   namespace: 'chat-websocket',
   cors: {
-    origin: '*',
+    origin: ['http://localhost:3000'],
+    credentials: true,
   },
+  pingInterval: 10000,
+  pingTimeout: 15000,
 })
 export class EventsGateway {
   @WebSocketServer()
