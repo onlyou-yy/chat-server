@@ -1,19 +1,23 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import entities from '.';
+import { ConfigModule } from '@nestjs/config';
+
+let envFilePath = '.env.development';
+if (process.env.ENVIRONMENT === 'production') envFilePath = '.env.production';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ envFilePath, isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '1234',
-      database: 'chat',
+      host: process.env.MYSQL_DB_HOST,
+      port: parseInt(process.env.MYSQL_DB_PORT),
+      username: process.env.MYSQL_DB_USERNAME,
+      password: process.env.MYSQL_DB_PASSWORD,
+      database: process.env.MYSQL_DB_NAME,
+      synchronize: Boolean(+process.env.MYSQL_DB_SYNCHRONIZE),
       entities: entities,
-      // autoLoadEntities: true,
-      synchronize: true,
     }),
   ],
 })

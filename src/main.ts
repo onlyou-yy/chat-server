@@ -39,6 +39,15 @@ async function bootstrap() {
       store: new TypeormStore().connect(sessionRepository),
     }),
   );
-  await app.listen(3000);
+
+  try {
+    const { HTTP_SERVER_PORT, ENVIRONMENT, ENVIRONMENT_MESSAGE } = process.env;
+    await app.listen(HTTP_SERVER_PORT, () => {
+      console.log(`Running on Port ${HTTP_SERVER_PORT}`);
+      console.log(`Running in ${ENVIRONMENT} mode: ${ENVIRONMENT_MESSAGE}`);
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }
 bootstrap();
