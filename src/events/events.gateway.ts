@@ -8,8 +8,8 @@ import {
 import { Server, Socket } from 'socket.io';
 import { ConnectManagerService } from './manager/connect-manager.service';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { TSocketGetEventData, TSocketPostEventData } from './messageData.type';
-import { EServerOnEventType } from 'src/utils/event.enum';
+import { TSocketGetEventData, TSocketPostEventData } from 'src/utils/types';
+import { EServerOnEventType } from 'src/utils/constants';
 
 @WebSocketGateway({
   namespace: 'chat-websocket',

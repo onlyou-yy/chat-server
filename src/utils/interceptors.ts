@@ -17,7 +17,7 @@ export class HttpResTransformInterceptor<T>
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
-      catchError((err) => throwError(new BadGatewayException())),
+      catchError((err) => throwError(new BadGatewayException(err))),
       map((value) => ({ code: 200, msg: 'success', data: value })),
     );
   }

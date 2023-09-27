@@ -27,8 +27,8 @@ export class UserService {
     return this.userRepository.findOneBy({ id });
   }
 
-  findOneByName(name: string) {
-    return this.userRepository.findOneBy({ name });
+  findOneByName(username: string) {
+    return this.userRepository.findOneBy({ username });
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {

@@ -5,7 +5,7 @@ import { WebsocketAdapter } from './events/events.adapter';
 import * as session from 'express-session';
 import { sessionConstants } from './utils/constants';
 import { DataSource } from 'typeorm';
-import { Session } from './utils/typeorm/entities/session.entity';
+import { Session } from './utils/typeorm/entities/Session.entity';
 import { TypeormStore } from 'connect-typeorm/out';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { HttpResTransformInterceptor } from './utils/interceptors';

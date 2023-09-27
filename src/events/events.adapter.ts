@@ -4,7 +4,7 @@ import { IAuthenticatedSocket } from 'src/utils/interfaces';
 import * as cookie from 'cookie';
 import * as cookieParser from 'cookie-parser';
 import { DataSource } from 'typeorm';
-import { Session } from 'src/utils/typeorm/entities/session.entity';
+import { Session } from 'src/utils/typeorm/entities/Session.entity';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
 export class WebsocketAdapter extends IoAdapter {

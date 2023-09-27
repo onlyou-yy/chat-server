@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { TChatEventGetData, TChatToData } from './chat.type';
 import { ChatHandler } from './chat.interface';
 import { OnEvent } from '@nestjs/event-emitter';
-import { EClientOnEventType, EServerOnEventType } from 'src/utils/event.enum';
 import { ConnectManagerService } from 'src/events/manager/connect-manager.service';
+import { TChatEventGetData, TChatToData } from 'src/utils/types';
+import { EClientOnEventType, EServerOnEventType } from 'src/utils/constants';
 
 @Injectable()
 export class ChatEvent implements ChatHandler {

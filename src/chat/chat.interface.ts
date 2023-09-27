@@ -1,4 +1,4 @@
-import { TChatEventGetData } from './chat.type';
+import { TChatEventGetData } from 'src/utils/types';
 
 export interface ITalkTo<T> {
   fromId: string;
