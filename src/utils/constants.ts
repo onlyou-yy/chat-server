@@ -1,12 +1,3 @@
-export const jwtConstants = {
-  secret: 'onlycode first nestjs server jwt secret',
-};
-
-export const sessionConstants = {
-  secret: 'onlycode first nestjs server cookie secret',
-  name: 'CHAT_APP_SESSION_ID',
-};
-
 export enum EServerOnEventType {
   /**用户建立连接 */
   CLIENT_CONNECTION = 'connection',
@@ -25,4 +16,9 @@ export enum EServerOnEventType {
 
 export enum EClientOnEventType {
   CLIENT_GET_CHAT_DATA = 'CLIENT_GET_CHAT_DATA',
+}
+
+/**路由 */
+export enum Routes {
+  USERS = 'users',
 }

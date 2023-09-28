@@ -1,5 +1,4 @@
 import { IoAdapter } from '@nestjs/platform-socket.io';
-import { sessionConstants } from 'src/utils/constants';
 import { IAuthenticatedSocket } from 'src/utils/interfaces';
 import * as cookie from 'cookie';
 import * as cookieParser from 'cookie-parser';
@@ -24,14 +23,14 @@ export class WebsocketAdapter extends IoAdapter {
         return next(new Error('Not Authenticated. No cookies were sent'));
       }
       const sessionData = cookie.parse(clientCookie);
-      const sessionId = sessionData[sessionConstants.name];
+      const sessionId = sessionData[process.env.SESSION_NAME];
       if (!sessionId) {
         console.log('sessionId do not exist');
         return next(new Error('Not Authenticated'));
       }
       const signedCookie = cookieParser.signedCookie(
         sessionId,
-        sessionConstants.secret,
+        process.env.SESSION_SECRET,
       );
       if (!signedCookie) return next(new Error('Error signing cookie'));
       const sessionRepository = dataSource.getRepository(Session);

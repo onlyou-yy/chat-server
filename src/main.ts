@@ -3,7 +3,6 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { WebsocketAdapter } from './events/events.adapter';
 import * as session from 'express-session';
-import { sessionConstants } from './utils/constants';
 import { DataSource } from 'typeorm';
 import { Session } from './utils/typeorm/entities/Session.entity';
 import { TypeormStore } from 'connect-typeorm/out';
@@ -27,8 +26,8 @@ async function bootstrap() {
   app.set('trust proxy', 'loopback');
   app.use(
     session({
-      secret: sessionConstants.secret,
-      name: sessionConstants.name,
+      secret: process.env.SESSION_SECRET,
+      name: process.env.SESSION_NAME,
       resave: false,
       saveUninitialized: false,
       cookie: {
