@@ -10,14 +10,21 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(username: string, password: string) {
-    const user = await this.userService.findOneByName(username);
+  async login(account: string, password: string) {
+    const user = await this.userService.findUser(
+      { account },
+      { selectAllField: true },
+    );
     const userPassw = user?.password;
     const isSavePassw = await compareHash(password, userPassw);
     if (!isSavePassw) {
       throw new UnauthorizedException();
     }
-    const payload = { id: user.id, username: user.username };
+    const payload = {
+      id: user.id,
+      username: user.username,
+      account: user.account,
+    };
     return {
       access_token: await this.jwtService.signAsync(payload),
       user: payload,

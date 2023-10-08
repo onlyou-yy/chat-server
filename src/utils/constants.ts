@@ -1,3 +1,5 @@
+import { MulterField } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
+
 export enum EServerOnEventType {
   /**用户建立连接 */
   CLIENT_CONNECTION = 'connection',
@@ -20,5 +22,20 @@ export enum EClientOnEventType {
 
 /**路由 */
 export enum Routes {
+  AUTH = 'auth',
   USERS = 'users',
+  USERS_PROFILES = 'users/profile',
+  USER_PRESENCE = 'users/presence',
+  GROUPS = 'groups',
 }
+
+export const UserProfileFileFields: MulterField[] = [
+  {
+    name: 'banner',
+    maxCount: 1,
+  },
+  {
+    name: 'avatar',
+    maxCount: 1,
+  },
+];

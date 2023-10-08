@@ -19,6 +19,10 @@ import { join } from 'path';
       serveRoot: '/client',
       rootPath: join(__dirname, '../clientTest'),
     }),
+    ServeStaticModule.forRoot({
+      serveRoot: '/assets',
+      rootPath: join(__dirname, '../assets'),
+    }),
     EventsModule,
     ConnectManagerModule,
     UserModule,

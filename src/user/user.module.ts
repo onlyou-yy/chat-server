@@ -7,11 +7,15 @@ import { UserProfileController } from './controllers/user-profile.controller';
 import { UserPresenceController } from './controllers/user-presence.controller';
 import { UserProfileService } from './services/user-profile.service';
 import { UserPresenceService } from './services/user-presence.service';
+import { FileStorageModule } from 'src/file-storage/file-storage.module';
 
 const providers = [UserService, UserProfileService, UserPresenceService];
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, UserPresence, UserProfile, Peer])],
+  imports: [
+    FileStorageModule,
+    TypeOrmModule.forFeature([User, UserPresence, UserProfile, Peer]),
+  ],
   controllers: [UserController, UserProfileController, UserPresenceController],
   providers: providers,
   exports: providers,

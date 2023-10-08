@@ -1,4 +1,5 @@
 import { Socket } from 'socket.io';
+import { GroupMessageAttachment, MessageAttachment, User } from './typeorm';
 
 /**创建用户参数 */
 export type CreateUserDetail = {
@@ -24,9 +25,36 @@ export type FindUserOptions = {
 
 export type UpdateUserProfileParams = Partial<{
   about: string;
-  banner: File;
-  avatar: File;
+  banner: Express.Multer.File;
+  avatar: Express.Multer.File;
 }>;
+
+export type UserProfileFiles = Partial<{
+  avatar: Express.Multer.File[];
+  banner: Express.Multer.File[];
+}>;
+
+export type UpdateStatusMessageParams = {
+  user: User;
+  statusMessage: string;
+};
+export type UserPresenceStatus = 'online' | 'away' | 'offline' | 'dnd';
+
+export type ImagePermission = 'public-read' | 'private';
+export type UploadImageParams = {
+  key: string;
+  file: Express.Multer.File;
+};
+
+export type UploadMessageAttachmentParams = {
+  file: Express.Multer.File;
+  messageAttachment: MessageAttachment;
+};
+
+export type UploadGroupMessageAttachmentParams = {
+  file: Express.Multer.File;
+  messageAttachment: GroupMessageAttachment;
+};
 
 export type FriendRequestStatus = 'accepted' | 'pending' | 'rejected';
 

@@ -5,6 +5,10 @@ export interface IAuthenticatedSocket extends Socket {
   user?: User;
 }
 
+export interface AuthenticatedRequest extends Request {
+  user: User;
+}
+
 export interface HttpResponse<T> {
   code: number;
   msg: string;
