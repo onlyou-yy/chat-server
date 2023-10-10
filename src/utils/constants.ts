@@ -27,6 +27,11 @@ export enum Routes {
   USERS_PROFILES = 'users/profile',
   USER_PRESENCE = 'users/presence',
   GROUPS = 'groups',
+  GROUPS_MESSAGES = 'groups/messages',
+  GROUPS_RECIPIENTS = 'groups/recipients',
+  MESSAGES = 'messages',
+  FRIENDS = 'friends',
+  FRIENDS_REQUESTS = 'friends/request',
 }
 
 export const UserProfileFileFields: MulterField[] = [

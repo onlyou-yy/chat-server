@@ -1,5 +1,6 @@
 import { Socket } from 'socket.io';
 import { User } from './typeorm';
+import { Request } from 'express';
 
 export interface IAuthenticatedSocket extends Socket {
   user?: User;

@@ -1,5 +1,15 @@
 import { Socket } from 'socket.io';
-import { GroupMessageAttachment, MessageAttachment, User } from './typeorm';
+import {
+  Conversation,
+  Friend,
+  FriendRequest,
+  Group,
+  GroupMessage,
+  GroupMessageAttachment,
+  Message,
+  MessageAttachment,
+  User,
+} from './typeorm';
 
 /**创建用户参数 */
 export type CreateUserDetail = {
@@ -56,7 +66,173 @@ export type UploadGroupMessageAttachmentParams = {
   messageAttachment: GroupMessageAttachment;
 };
 
+export interface Attachment extends Express.Multer.File {}
+
+export type CreateGroupParams = {
+  creator: User;
+  title?: string;
+  users: string[];
+};
+
+export type FetchGroupsParams = {
+  userId: string;
+};
+
+export type CreateGroupMessageParams = {
+  author: User;
+  attachments?: Express.Multer.File[];
+  content: string;
+  groupId: string;
+};
+
+export type CreateGroupMessageResponse = {
+  message: GroupMessage;
+  group: Group;
+};
+
+export type DeleteGroupMessageParams = {
+  userId: string;
+  groupId: string;
+  messageId: string;
+};
+
+export type AddGroupRecipientParams = {
+  id: string;
+  account: string;
+  userId: string;
+};
+
+export type RemoveGroupRecipientParams = {
+  id: string;
+  removeUserId: string;
+  issuerId: string;
+};
+
+export type AddGroupUserResponse = {
+  group: Group;
+  user: User;
+};
+
+export type RemoveGroupUserResponse = {
+  group: Group;
+  user: User;
+};
+
+export type AccessParams = {
+  id: string;
+  userId: string;
+};
+
+export type TransferOwnerParams = {
+  userId: string;
+  groupId: string;
+  newOwnerId: string;
+};
+
+export type LeaveGroupParams = {
+  id: string;
+  userId: string;
+};
+
+export type CheckUserGroupParams = {
+  id: string;
+  userId: string;
+};
+
+export type UpdateGroupDetailsParams = {
+  id: string;
+  title?: string;
+  avatar?: Express.Multer.File;
+};
+
+export type CreateParticipantParams = {
+  id: string;
+};
+
+export type CreateMessageParams = {
+  id: string;
+  content?: string;
+  attachments?: Attachment[];
+  user: User;
+};
+
+export type CreateMessageResponse = {
+  message: Message;
+  conversation: Conversation;
+};
+
+export type DeleteMessageParams = {
+  userId: string;
+  conversationId: string;
+  messageId: string;
+};
+
+export type FindMessageParams = {
+  userId: string;
+  conversationId: string;
+  messageId: string;
+};
+
+export type EditMessageParams = {
+  conversationId: string;
+  messageId: string;
+  userId: string;
+  content: string;
+};
+
+export type EditGroupMessageParams = {
+  groupId: string;
+  messageId: string;
+  userId: string;
+  content: string;
+};
+
+export type CreateFriendParams = {
+  user: User;
+  account: string;
+};
+
 export type FriendRequestStatus = 'accepted' | 'pending' | 'rejected';
+
+export type FriendRequestParams = {
+  id: string;
+  userId: string;
+};
+
+export type CancelFriendRequestParams = {
+  id: string;
+  userId: string;
+};
+
+export type DeleteFriendRequestParams = {
+  id: string;
+  userId: string;
+};
+
+export type AcceptFriendRequestResponse = {
+  friend: Friend;
+  friendRequest: FriendRequest;
+};
+
+export type RemoveFriendEventPayload = {
+  friend: Friend;
+  userId: string;
+};
+
+export type CreateConversationParams = {
+  username: string;
+  message: string;
+};
+
+export type GetConversationMessagesParams = {
+  id: number;
+  limit: number;
+};
+
+export type UpdateConversationParams = Partial<{
+  id: number;
+  lastMessageSent: Message;
+}>;
 
 export type TChatToData = {
   fromId: string;

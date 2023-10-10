@@ -7,8 +7,8 @@ import {
 import { User } from './User.entity';
 
 export abstract class BaseMessage {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column('text', { nullable: true })
   content: string;
