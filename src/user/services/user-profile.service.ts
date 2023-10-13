@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { generateUUIDV4 } from 'src/utils/helpers';
 import { FileStorageService } from 'src/file-storage/file-storage.service';
+import { Attachment } from 'src/utils/interfaces';
 
 @Injectable()
 export class UserProfileService implements IUserProfile {
@@ -51,7 +52,7 @@ export class UserProfileService implements IUserProfile {
     return this.updateProfile(user, params);
   }
 
-  async updateAssets(type: string, file: Express.Multer.File) {
+  async updateAssets(type: string, file: Attachment) {
     const key = generateUUIDV4();
     const filename = `${type}_${key}_${file.originalname}`;
     const { src } = this.imageStorage.upload({ key: filename, file });

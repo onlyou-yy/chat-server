@@ -9,7 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Routes, ServerEvents } from '../utils/constants';
+import { Routes, ServerOnEventType } from '../utils/constants';
 import { AuthUser } from '../utils/decorators';
 import { User } from '../utils/typeorm';
 import { CreateFriendDto } from './dtos/CreateFriend.dto';
@@ -44,7 +44,7 @@ export class FriendRequestController {
     @Param('id', ParseIntPipe) id: string,
   ) {
     const response = await this.friendRequestService.accept({ id, userId });
-    this.event.emit(ServerEvents.FRIEND_REQUEST_ACCEPTED, response);
+    this.event.emit(ServerOnEventType.FRIEND_REQUEST_ACCEPTED, response);
     return response;
   }
 
@@ -64,7 +64,7 @@ export class FriendRequestController {
     @Param('id', ParseIntPipe) id: string,
   ) {
     const response = await this.friendRequestService.reject({ id, userId });
-    this.event.emit(ServerEvents.FRIEND_REQUEST_REJECTED, response);
+    this.event.emit(ServerOnEventType.FRIEND_REQUEST_REJECTED, response);
     return response;
   }
 }

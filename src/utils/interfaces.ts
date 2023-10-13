@@ -10,6 +10,8 @@ export interface AuthenticatedRequest extends Request {
   user: User;
 }
 
+export interface Attachment extends Express.Multer.File {}
+
 export interface HttpResponse<T> {
   code: number;
   msg: string;

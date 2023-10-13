@@ -13,11 +13,11 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { Routes } from '../../utils/constants';
 import { AuthUser } from '../../utils/decorators';
 import { User } from '../../utils/typeorm';
-import { Attachment } from '../../utils/types';
 import { CreateGroupDto } from '../dtos/CreateGroup.dto';
 import { TransferOwnerDto } from '../dtos/TransferOwner.dto';
 import { UpdateGroupDetailsDto } from '../dtos/UpdateGroupDetails.dto';
 import { GroupService } from '../services/group.service';
+import { Attachment } from 'src/utils/interfaces';
 
 @Controller(Routes.GROUPS)
 export class GroupController {

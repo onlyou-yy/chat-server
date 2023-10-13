@@ -15,11 +15,11 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { Routes } from '../../utils/constants';
 import { AuthUser } from '../../utils/decorators';
 import { User } from '../../utils/typeorm';
-import { Attachment } from '../../utils/types';
 import { IGroupMessageService } from '../interfaces/group-messages';
 import { CreateMessageDto } from 'src/message/dtos/CreateMessage.dto';
 import { EmptyMessageException } from 'src/message/exceptions/EmptyMessage';
 import { EditMessageDto } from 'src/message/dtos/EditMessage.dto';
+import { Attachment } from 'src/utils/interfaces';
 
 @Controller(Routes.GROUPS_MESSAGES)
 export class GroupMessageController {

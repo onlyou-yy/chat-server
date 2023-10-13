@@ -1,6 +1,6 @@
-import { Controller, Delete, Get, Inject, Param } from '@nestjs/common';
+import { Controller, Delete, Get, Param } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { Routes, ServerEvents } from '../utils/constants';
+import { Routes, ServerOnEventType } from '../utils/constants';
 import { AuthUser } from '../utils/decorators';
 import { User } from '../utils/typeorm';
 import { IFriendsService } from './friends';
@@ -24,7 +24,7 @@ export class FriendsController {
     @Param('id') id: string,
   ) {
     const friend = await this.friendsService.deleteFriend({ id, userId });
-    this.event.emit(ServerEvents.FRIEND_REMOVED, { friend, userId });
+    this.event.emit(ServerOnEventType.FRIEND_REMOVED, { friend, userId });
     return friend;
   }
 }

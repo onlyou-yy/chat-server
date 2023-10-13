@@ -1,9 +1,9 @@
 import { MessageAttachment, GroupMessageAttachment } from 'src/utils/typeorm';
-import { Attachment } from 'src/utils/types';
 import { IMessageAttachmentsService } from './message-attachment';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FileStorageService } from 'src/file-storage/file-storage.service';
+import { Attachment } from 'src/utils/interfaces';
 
 export class MessageAttachmentService implements IMessageAttachmentsService {
   constructor(

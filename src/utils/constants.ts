@@ -1,6 +1,7 @@
 import { MulterField } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
-export enum EServerOnEventType {
+/** 服务端接收的事件 */
+export enum ServerOnEventType {
   /**用户建立连接 */
   CLIENT_CONNECTION = 'connection',
   /**用户断开连接 */
@@ -14,9 +15,14 @@ export enum EServerOnEventType {
 
   CHAT_WITH_SOMEONE = 'CHAT_WITH_SOMEONE',
   CHAT_AT_ROOM = 'CHAT_AT_ROOM',
+
+  FRIEND_REQUEST_ACCEPTED = 'FRIEND_REQUEST_ACCEPTED',
+  FRIEND_REQUEST_REJECTED = 'FRIEND_REQUEST_REJECTED',
+  FRIEND_REMOVED = 'FRIEND_REMOVED',
 }
 
-export enum EClientOnEventType {
+/** 发送给客户端的事件 */
+export enum ClientOnEventType {
   CLIENT_GET_CHAT_DATA = 'CLIENT_GET_CHAT_DATA',
 }
 
@@ -32,6 +38,8 @@ export enum Routes {
   MESSAGES = 'messages',
   FRIENDS = 'friends',
   FRIENDS_REQUESTS = 'friends/request',
+  CONVERSATIONS = 'conversations',
+  EXISTS = 'exists',
 }
 
 export const UserProfileFileFields: MulterField[] = [

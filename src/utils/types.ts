@@ -10,6 +10,7 @@ import {
   MessageAttachment,
   User,
 } from './typeorm';
+import { Attachment } from './interfaces';
 
 /**创建用户参数 */
 export type CreateUserDetail = {
@@ -35,13 +36,13 @@ export type FindUserOptions = {
 
 export type UpdateUserProfileParams = Partial<{
   about: string;
-  banner: Express.Multer.File;
-  avatar: Express.Multer.File;
+  banner: Attachment;
+  avatar: Attachment;
 }>;
 
 export type UserProfileFiles = Partial<{
-  avatar: Express.Multer.File[];
-  banner: Express.Multer.File[];
+  avatar: Attachment[];
+  banner: Attachment[];
 }>;
 
 export type UpdateStatusMessageParams = {
@@ -53,20 +54,18 @@ export type UserPresenceStatus = 'online' | 'away' | 'offline' | 'dnd';
 export type ImagePermission = 'public-read' | 'private';
 export type UploadImageParams = {
   key: string;
-  file: Express.Multer.File;
+  file: Attachment;
 };
 
 export type UploadMessageAttachmentParams = {
-  file: Express.Multer.File;
+  file: Attachment;
   messageAttachment: MessageAttachment;
 };
 
 export type UploadGroupMessageAttachmentParams = {
-  file: Express.Multer.File;
+  file: Attachment;
   messageAttachment: GroupMessageAttachment;
 };
-
-export interface Attachment extends Express.Multer.File {}
 
 export type CreateGroupParams = {
   creator: User;
@@ -80,7 +79,7 @@ export type FetchGroupsParams = {
 
 export type CreateGroupMessageParams = {
   author: User;
-  attachments?: Express.Multer.File[];
+  attachments?: Attachment[];
   content: string;
   groupId: string;
 };
@@ -142,7 +141,7 @@ export type CheckUserGroupParams = {
 export type UpdateGroupDetailsParams = {
   id: string;
   title?: string;
-  avatar?: Express.Multer.File;
+  avatar?: Attachment;
 };
 
 export type CreateParticipantParams = {
@@ -225,12 +224,12 @@ export type CreateConversationParams = {
 };
 
 export type GetConversationMessagesParams = {
-  id: number;
+  id: string;
   limit: number;
 };
 
 export type UpdateConversationParams = Partial<{
-  id: number;
+  id: string;
   lastMessageSent: Message;
 }>;
 

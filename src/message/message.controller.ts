@@ -19,7 +19,7 @@ import { EmptyMessageException } from './exceptions/EmptyMessage';
 import { Routes } from 'src/utils/constants';
 import { User } from 'src/utils/typeorm';
 import { AuthUser } from 'src/utils/decorators';
-import { Attachment } from 'src/utils/types';
+import { Attachment } from 'src/utils/interfaces';
 
 @Controller(Routes.MESSAGES)
 export class MessageController {

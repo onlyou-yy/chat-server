@@ -11,6 +11,7 @@ import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import * as moment from 'moment';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Attachment } from 'src/utils/interfaces';
 
 const assetsDir = 'assets/uploads';
 const assetsPath = path.resolve(__dirname, `../../${assetsDir}`);
@@ -46,7 +47,7 @@ export class FileStorageService implements IFileStorageService {
     return this.groupMessageAttachment.save(params.messageAttachment);
   }
 
-  saveFile(file: Express.Multer.File, filename?: string) {
+  saveFile(file: Attachment, filename?: string) {
     if (!existsSync(assetsPath)) {
       mkdirSync(assetsPath, { recursive: true });
     }
